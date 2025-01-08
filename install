@@ -2,21 +2,42 @@
 import os
 from pathlib import Path
 
-def install(dotfiles_dir_path: Path, dir_path: Path) -> None:
+BOLD_CYAN = "\x1b[36;1m"
+BOLD_WHITE = "\x1b[37;1m"
+BOLD_GREEN = "\x1b[32;1m"
+RESET = "\x1b[0m"
+
+def create_symlinks(dotfiles_dir_path: Path, dir_path: Path):
+    # Lifted verbatim from wayflyer/dotfiles
     for entry in os.scandir(dir_path):
         entry_path = dir_path / entry.name
         entry_path_rel = entry_path.relative_to(dotfiles_dir_path)
-        local_path = Path(Path.home() / entry_path_rel)
+        local_path = Path.home() / entry_path_rel
         if entry.is_dir():
             if not local_path.exists():
                 local_path.mkdir()
-            install(dotfiles_dir_path, entry_path)
+            create_symlinks(dotfiles_dir_path, entry_path)
         else:
+            if local_path.exists():
+                local_path.unlink()
             local_path.symlink_to(entry_path)
 
-def main() -> None:
-    dotfiles_dir_path = Path(__file__).parent / "dotfiles"
-    install(dotfiles_dir_path, dotfiles_dir_path)
+def copy_dotfiles():
+    print()
+    print(f"{BOLD_WHITE}Moving configuration files...{RESET}")
+    print()
+
+    dotfiles_dir = Path(__file__).parent / "dotfiles"
+
+    create_symlinks(dotfiles_dir, dotfiles_dir)
+
+
+def main():
+    print()
+    print(f"{BOLD_CYAN}Running dotfiles install script{RESET} 💿")
+    print()
+
+    copy_dotfiles()
 
 if __name__ == "__main__":
     main()
