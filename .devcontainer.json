@@ -3,4 +3,11 @@
 	"initializeCommand": "echo ${localEnv:GITHUB_TOKEN} | docker login ghcr.io -u ${localEnv:GITHUB_ACTOR} --password-stdin && docker compose pull",
 	"service": "dev",
 	"workspaceFolder": "/workspace",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"angelo-breuer.clock"
+			]
+		}
+	}
 }
