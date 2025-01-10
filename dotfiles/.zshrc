@@ -22,6 +22,9 @@ source $ZSH/oh-my-zsh.sh
 alias zshconfig="cursor ~/.zshrc"
 alias sourcezsh="source ~/.zshrc"
 alias wfstart="./bin/m start"
+alias refresh-workspace="./bin/refresh-workspace"
+alias bank-start="wf scripts dev start"
+alias glpi="gl && pnpm i && poetry install"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
